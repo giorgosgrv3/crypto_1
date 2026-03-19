@@ -1,6 +1,8 @@
 def euclidean(a:int, b:int, decision:int):
+    swapped = False #this variable is used only for the extended algorithm
     if a<b:
         a, b = b, a
+        swapped = True
     
 ## ------------------- Simple euclidean -------------------
     # it isn't asked, but we did it to compare the printf's anyway
@@ -42,8 +44,6 @@ def euclidean(a:int, b:int, decision:int):
 
             print(f"{a} = {q}*{b} + {r}")
 
-            
-
             #from here on is the extended part, hopefully explained nicely in the report :)
             x = x_prev-q*x_curr
             y = y_prev-q*y_curr
@@ -57,6 +57,8 @@ def euclidean(a:int, b:int, decision:int):
             x_prev, x_curr = x_curr, x
             y_prev, y_curr = y_curr, y
 
+        if swapped:
+            return a, y_prev, x_prev
         return a, x_prev, y_prev
         
 
