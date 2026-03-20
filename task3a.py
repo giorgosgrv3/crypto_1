@@ -34,10 +34,13 @@ def decrypt(r1,r2,keys,M):
     return m1_hat,m2_hat
 
 if __name__ == "__main__":
-    M=10
+    M=15
+    m1=10
+    m2=12
     keys=keygen(M)
-    r1,r2 = encrypt(4,5,keys,M)
-    m1,m2 = decrypt(r1,r2,keys,M)
+    r1,r2 = encrypt(m1,m2,keys,M)
+    m1_hat,m2_hat = decrypt(r1,r2,keys,M)
 
-    print(m1)
-    print(m2)
+    print(f"Original messages:",m1," ",m2)
+    print(f"Encrypted messages:",r1," ",r2)
+    print(f"Decrypted messages:",m1_hat," ",m2_hat)
