@@ -24,7 +24,8 @@ def keygen(M):
         if coin2 == 0:
             while True:
                 b=randbelow(M)
-                #2.3.2 
+                #2.3.2 :for a congruence ax = b (mod n) to be solvable (a,n) must be a devisor of b
+                #In this case a=b, b=ad-k and n=M
                 if (a*d-k) % get_gcd(b,M) == 0: 
                     c =solve_linear_congruence(b,(a*d-k),M)
                     break
@@ -75,11 +76,14 @@ def decrypt(r1,r2,keys,M):
     return m1_hat,m2_hat
 
 if __name__ == "__main__":
-    M=11
+    M=35
+    m1=19
+    m2=32
     keys=keygen(M)
     print(keys)
-    r1,r2 = encrypt(1,2,keys,M)
-    m1,m2 = decrypt(r1,r2,keys,M)
+    r1,r2 = encrypt(m1,m2,keys,M)
+    m1_hat,m2_hat = decrypt(r1,r2,keys,M)
 
-    print(m1)
-    print(m2)
+    print(f"Original messages:",m1," ",m2)
+    print(f"Encrypted messages:",r1," ",r2)
+    print(f"Decrypted messages:",m1_hat," ",m2_hat)
