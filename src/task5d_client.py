@@ -1,5 +1,5 @@
 import socket
-from secrets import randbelow
+from secrets import randbelow #geia sou giwrgo! 
 from utils import get_gcd
 
 def run_client():
@@ -59,12 +59,14 @@ def run_client():
                     client_sock.sendall(d.to_bytes(512,"big"))
                 
                     status = client_sock.recv(1024).decode()
+                    
                     if status == "Fail":
                         login_success = False
                         break
-            
-                final_status = client_sock.recv(1024).decode()
-                print(f"Login Result: {final_status}")
+                    elif status == "Success":
+                        print("Login Result: Success")
+                        login_success = True
+                        break
 
             case '3':
                 break

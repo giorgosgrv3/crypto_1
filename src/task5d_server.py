@@ -61,13 +61,16 @@ def run_server():
                                 # Verify: d^2 ≡ b * y^c (mod n) 
                                 checking = ((d % n)*(d % n)) % n
                                 target = (b * (y if c == 1 else 1)) % n
+                                
                                 if checking != target:
+                                    conn.sendall(b"Fail")
                                     success = False
                                     break
-                        
-                                conn.sendall(b"Again") 
-                    
-                            conn.sendall(b"Success" if success else b"Fail")
+
+                                if _ < t-1:
+                                    conn.sendall(b"Again") 
+                                else:
+                                    conn.sendall(b"Success")
                     
                     case '3': 
                         break

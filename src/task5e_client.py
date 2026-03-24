@@ -12,11 +12,12 @@ def run_client():
     
     #              n     y     t     b_list  c_list  d_list
     intercepted = [None, None, None, []    , []    , []    ]
-    
+    #
 
     while True:
         prompt = client_sock.recv(1024).decode()
         print("\n",prompt)
+        
         choice = input("> ")
         client_sock.sendall(choice.encode())
 
@@ -40,7 +41,7 @@ def run_client():
                     continue
                 
                 client_sock.sendall(y.to_bytes(512,"big"))
-                resp = client_sock.recv(1024).decode()
+                resp = client_sock.recv(1024).decode() #receive t or "Fail"
             
                 if resp == "Fail":
                     print("Login Failed at start.")
@@ -69,12 +70,15 @@ def run_client():
                     intercepted[5].append(d)
                 
                     status = client_sock.recv(1024).decode()
+                    
                     if status == "Fail":
                         login_success = False
                         break
-            
-                final_status = client_sock.recv(1024).decode()
-                print(f"Login Result: {final_status}")
+                    elif status == "Success":
+                        print("Login Result: Success")
+                        login_success = True
+                        break
+                    # else status == "Again": continue normally
 
             case '3':
                 break
