@@ -60,14 +60,15 @@ def run_server():
                                 # Verify: d^2 ≡ b * y^c (mod n) 
                                 checking = ((d % n)*(d % n)) % n
                                 target = (b * (y if c == 1 else 1)) % n
-                                if checking != target:
+
+                                if checking != target: #if a challenge fails, send "Fail" and break
                                     conn.sendall(b"Fail")
                                     success = False
                                     break
 
-                                if _ < t-1:
+                                if _ < t-1: #only send "Again" if it is NOT the last iteration of t
                                     conn.sendall(b"Again") 
-                                else:
+                                else: # if it IS the last iteration of t, send "Success"
                                     conn.sendall(b"Success")
                                         
                     case '3': 
