@@ -1,5 +1,5 @@
-from secrets import randbelow , randbits
-from utils import extended_euclidean
+from secrets import randbelow 
+from utils import solve_linear_congruence
 
 
 def keygen(M):
@@ -20,14 +20,10 @@ def encrypt(m1,m2,keys,M):
 def decrypt(r1,r2,keys,M):
 
     a,b,c,d = keys
-    det=(a*d)-(b*c)
-    gcd,t,y = extended_euclidean(det,M)
+    k=(a*d)-(b*c)
 
-    print(f"gcd =",gcd)
-    print(f"x=",t)
-    print(f"y=",y)
+    t=solve_linear_congruence(k,1,M)
     
-
     m1_hat = ((d*r1-b*r2)*t) % M
     m2_hat = ((a*r2-c*r1)*t) % M
 

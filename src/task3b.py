@@ -7,13 +7,10 @@ def keygen(M):
     Zm = range(M)
     Tm =[]
 
-    for i in Zm:
-        gcd,_,_=extended_euclidean(i,M)
-        if gcd == 1:
-            Tm.append(i)
-
-    idx = randbelow(len(Tm)) #take a random index of Tm
-    k = Tm[idx] #now we have a k picked from the co-primes of M
+    while True:
+        k=randbelow(M) 
+        if get_gcd(k,M)==1:
+            break
 
     coin1 = randbelow(2) #takes values 0 or 1
     coin2 = randbelow(2)
