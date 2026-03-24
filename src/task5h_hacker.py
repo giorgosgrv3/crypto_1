@@ -1,6 +1,7 @@
 import socket
 import json
 from secrets import randbelow
+from utils import get_gcd
 
 with open("etc/intercepted_data.json", "r") as f:
     intercepted = json.load(f)
@@ -20,13 +21,15 @@ hacker_sock.sendall(b"2")
 # present the intercepted y, from the client that ran right before
 hacker_sock.sendall(y.to_bytes(512, "big"))
 resp = hacker_sock.recv(1024).decode()
-
 if resp != "Fail":
     t = int(resp)
     print(f"-- server accepted the intercepted y. starting {t} rounds of challenges")
 
     for i in range(t):
-        a = randbelow(n)
+        while True:
+            a = randbelow(n)
+            if get_gcd(a,n)==1:
+                break
         b = ((a%n) * (a%n)) % n
 
         hacker_sock.sendall(b.to_bytes(512, "big"))
@@ -42,3 +45,5 @@ if resp != "Fail":
             print("-- we have logged in as the user.\n")
             print("Hello, friend. Hello, friend? That's lame. Maybe I should give you a name. But that's a slippery slope. You're only in my head. ")
             break
+else:
+    print("Server didn't find the y. (run client again)")
