@@ -21,7 +21,7 @@ def euclidean(a:int, b:int, decision:int):
             q = a//b
             r = a-q*b #or r=a%b, but for the sake of clarity
 
-            if abs(r-b)<abs(r):
+            if abs(r-b)<abs(r): #compare between a=qb+r and a=(q+1)b + (r-b)
                 q=q+1
                 r=r-b
             print(f"{a} = {q}*{b} + {r}")
