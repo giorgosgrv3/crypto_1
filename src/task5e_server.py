@@ -18,7 +18,7 @@ def run_server():
         try:
             while True:
                 conn.sendall(b"\nPlease press 1 for Registration, 2 for Login or 3 for Exit: ")
-                choice = conn.recv(1024).decode().strip()
+                choice = conn.recv(1).decode().strip()
 
                 match choice:
                     case '1':
