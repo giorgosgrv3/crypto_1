@@ -70,7 +70,7 @@ def run_client():
                     intercepted[5].append(d)
                 
                     status = client_sock.recv(1024).decode()
-                    
+
                     if status == "Fail":
                         login_success = False
                         break
@@ -78,7 +78,7 @@ def run_client():
                         print("Login Result: Success")
                         login_success = True
                         break
-                    # else status == "Again": continue normally
+                    # else status=="Again", in which case we continue normally
 
             case '3':
                 break

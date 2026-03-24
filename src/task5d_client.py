@@ -59,7 +59,7 @@ def run_client():
                     client_sock.sendall(d.to_bytes(512,"big"))
                 
                     status = client_sock.recv(1024).decode()
-                    
+
                     if status == "Fail":
                         login_success = False
                         break
@@ -67,6 +67,7 @@ def run_client():
                         print("Login Result: Success")
                         login_success = True
                         break
+                    # else status == "Again", in which case we continue normally
 
             case '3':
                 break
