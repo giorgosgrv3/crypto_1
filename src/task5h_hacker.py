@@ -34,7 +34,8 @@ if resp != "Fail":
 
         hacker_sock.sendall(b.to_bytes(512, "big"))
         c_bytes = hacker_sock.recv(1)  
-        hacker_sock.sendall(a.to_bytes(512, "big"))
+
+        hacker_sock.sendall(a.to_bytes(512, "big")) # d^2 congruent to a^2, so attacker doesn't need secret x
 
         status = hacker_sock.recv(1024).decode()
 
