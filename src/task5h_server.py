@@ -28,7 +28,7 @@ def run_server():
                         if y_bytes:
                             y = int.from_bytes(y_bytes, "big") # recv returns bytes, so we pass it directly to from_bytes
                             database.add(y) #store y to db
-                            print(database)
+                            print("user has registered.")
                             conn.sendall(b"Registered") 
                     case '2':
                         y_bytes = conn.recv(512)
@@ -64,12 +64,14 @@ def run_server():
                                 if checking != target: #if a challenge fails, send "Fail" and break
                                     conn.sendall(b"Fail")
                                     success = False
+                                    print("user has failed to log in.")
                                     break
 
                                 if _ < t-1: #only send "Again" if it is NOT the last iteration of t
                                     conn.sendall(b"Again") 
                                 else: # if it IS the last iteration of t, send "Success"
                                     conn.sendall(b"Success")
+                                    print("user has logged in.")
                                         
                     case '3': 
                         break
