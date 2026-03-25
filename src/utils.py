@@ -54,7 +54,8 @@ def solve_linear_congruence(a, b, n):
     #Base solution x0 
     # Multiply the inverse by (b/gcd) and reduce mod (n/gcd) to keep it small
     n_prime = n // gcd
-    x0 = (x_inv * (b // gcd)) % n_prime
+    b_prime = b //gcd
+    x0 = (x_inv * b_prime) % n_prime
 
     return x0
 
