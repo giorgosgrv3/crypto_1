@@ -4,7 +4,7 @@ import utils
 
 def run_server():
     n = randbits(4096)  # 4096-bit modulus 
-    t = 3             # Challenge repetitions 
+    t = 3            # Challenge repetitions 
     database = set()    # Stores registered 'y' values 
 
     server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -18,7 +18,7 @@ def run_server():
         try:
             while True:
                 conn.sendall(b"\nPlease press 1 for Registration, 2 for Login or 3 for Exit: ")
-                choice = conn.recv(1024).decode().strip()
+                choice = conn.recv(1).decode().strip()
 
                 match choice:
                     case '1':
@@ -60,13 +60,16 @@ def run_server():
                                 # Verify: d^2 ≡ b * y^c (mod n) 
                                 checking = ((d % n)*(d % n)) % n
                                 target = (b * (y if c == 1 else 1)) % n
-                                if checking != target:
+
+                                if checking != target: #if a challenge fails, send "Fail" and break
+                                    conn.sendall(b"Fail")
                                     success = False
                                     break
-                        
-                                conn.sendall(b"Again") 
-                    
-                            conn.sendall(b"Success" if success else b"Fail")
+
+                                if _ < t-1: #only send "Again" if it is NOT the last iteration of t
+                                    conn.sendall(b"Again") 
+                                else: # if it IS the last iteration of t, send "Success"
+                                    conn.sendall(b"Success")
                     
                     case '3': 
                         break
